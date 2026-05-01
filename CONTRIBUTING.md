@@ -17,7 +17,9 @@ pnpm build
 
 ## Pull Requests
 
+- Create a feature branch before making reviewable changes. Do not develop fixes or features directly on `main`.
 - Keep changes focused.
+- Run the narrowest relevant local validation before opening or updating a pull request, and include that validation in the PR description.
 - Add or update tests for behavior changes.
 - Update `.llm-wiki/memory/` when decisions, constraints, known issues, or open questions change.
 - Do not commit generated files such as `dist/`, `.nx/`, `coverage/`, or `*.vsix`.

@@ -15,6 +15,8 @@
 - Keep VS Code API imports at the extension edge so core memory modules remain unit-testable.
 - Tool contribution names in `apps/project-memory-extension/package.json` must match registrations in `src/tools/toolProvider.ts`.
 - Default retrieval and instruction compilation should prioritize critical/high importance, high confidence, and fresh verification.
+- Work on a non-`main` branch for reviewable changes; do not develop fixes or features directly on `main`.
+- Before opening or updating a pull request, run the narrowest relevant local validation for the changed surface and include that validation in the PR.
 
 ## Conventions
 
