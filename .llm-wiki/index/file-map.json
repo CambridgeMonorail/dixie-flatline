@@ -7,11 +7,21 @@
       ".llm-wiki/memory/conventions.md",
       ".llm-wiki/memory/known-issues.md"
     ],
+    "apps/project-memory-extension/src/tools/**": [
+      ".llm-wiki/memory/decisions.md"
+    ],
+    "apps/project-memory-extension/src/instructions/**": [
+      ".llm-wiki/memory/decisions.md"
+    ],
     "apps/project-memory-extension/src/memory/**": [
+      ".llm-wiki/memory/decisions.md",
       ".llm-wiki/memory/domain-model.md"
     ],
     "apps/project-memory-extension/src/**/*.spec.ts": [
       ".llm-wiki/memory/testing.md"
+    ],
+    "apps/project-memory-extension/src/diff/**": [
+      ".llm-wiki/memory/open-questions.md"
     ]
   }
 }

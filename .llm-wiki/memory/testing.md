@@ -1,19 +1,30 @@
 ---
-id: project-memory-testing
-type: testing
-status: living
+id: deterministic-core-testing
+type: fact
+title: Deterministic core testing
+summary: Vitest covers deterministic memory behavior; extension-host tests are a later release confidence layer.
+createdAt: 2026-05-01
+lastUpdatedAt: 2026-05-01
+lastVerifiedAt: 2026-05-01
 confidence: medium
-last_reviewed: 2026-05-01
-related_files:
+importance: high
+relatedFiles:
   - apps/project-memory-extension/src/**/*.spec.ts
 tags:
   - vitest
+  - testing
+sources:
+  - apps/project-memory-extension/src/memory/memorySearch.spec.ts
+supersedes:
+supersededBy:
 ---
 
-# Testing
+# Deterministic core testing
 
 ## Summary
-Vitest covers deterministic core behavior. VS Code integration should be tested separately with extension-host tests once command and chat flows stabilize.
+Vitest covers deterministic memory behavior; extension-host tests are a later release confidence layer.
 
-## Current Coverage
-- `MemorySearch` verifies related file patterns rank above plain text matches.
+## Claims
+- `MemorySearch` verifies related file patterns rank above text-only matches.
+- Typecheck, Vitest, and VSIX packaging are the current verification baseline.
+- Extension-host tests should be added before depending on UI/chat behavior for release confidence.

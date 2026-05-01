@@ -9,25 +9,47 @@ describe('MemorySearch', () => {
         {
           path: '.llm-wiki/memory/decisions.md',
           title: 'Auth Decision',
+          summary: 'Server-owned refresh tokens.',
           body: 'Server-owned refresh tokens.',
           raw: '',
           frontmatter: {
             id: 'auth',
             type: 'decision',
-            related_files: ['apps/control-panel-ui/src/auth/**'],
-            tags: ['auth']
+            title: 'Auth Decision',
+            summary: 'Server-owned refresh tokens.',
+            relatedFiles: ['apps/control-panel-ui/src/auth/**'],
+            tags: ['auth'],
+            createdAt: '2026-05-01',
+            lastUpdatedAt: '2026-05-01',
+            lastVerifiedAt: '2026-05-01',
+            confidence: 'high',
+            importance: 'critical',
+            sources: [],
+            supersedes: [],
+            supersededBy: []
           }
         },
         {
           path: '.llm-wiki/memory/conventions.md',
           title: 'Conventions',
+          summary: 'Auth components use strict typing.',
           body: 'Auth components use strict typing.',
           raw: '',
           frontmatter: {
             id: 'conventions',
-            type: 'convention',
-            related_files: [],
-            tags: []
+            type: 'fact',
+            title: 'Conventions',
+            summary: 'Auth components use strict typing.',
+            relatedFiles: [],
+            tags: [],
+            createdAt: '2026-05-01',
+            lastUpdatedAt: '2026-05-01',
+            lastVerifiedAt: '2026-05-01',
+            confidence: 'medium',
+            importance: 'high',
+            sources: [],
+            supersedes: [],
+            supersededBy: []
           }
         }
       ],

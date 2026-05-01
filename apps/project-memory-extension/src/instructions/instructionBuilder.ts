@@ -8,22 +8,24 @@ export class InstructionBuilder {
 
   async build(root: string): Promise<string> {
     const pages = await this.store.list(root);
-    const architecture = pages.filter((page) => page.frontmatter.type === 'architecture');
-    const decisions = pages.filter((page) => page.frontmatter.type === 'decision');
-    const conventions = pages.filter((page) => page.frontmatter.type === 'convention');
-    const testing = pages.filter((page) => page.frontmatter.type === 'testing');
-    const issues = pages.filter((page) => page.frontmatter.type === 'issue');
+    const eligible = pages
+      .filter((page) => page.frontmatter.importance === 'critical' || page.frontmatter.importance === 'high')
+      .filter((page) => !page.frontmatter.supersededBy.length)
+      .sort((a, b) => instructionPriority(b) - instructionPriority(a));
+    const decisions = eligible.filter((page) => page.frontmatter.type === 'decision');
+    const facts = eligible.filter((page) => page.frontmatter.type === 'fact' || page.frontmatter.type === 'assumption');
+    const issues = eligible.filter((page) => page.frontmatter.type === 'known_issue');
+    const questions = eligible.filter((page) => page.frontmatter.type === 'question');
 
     return compact([
       '# Project Instructions for Copilot',
       '',
-      section('Project Overview', architecture),
       section('Key Decisions and Constraints', decisions),
-      section('Conventions', conventions),
-      section('Testing', testing),
+      section('Durable Facts and Assumptions', facts),
       section('Known Issues', issues),
+      section('Open Questions', questions),
       '',
-      '_Generated from `.llm-wiki/memory/` by Project Memory for Copilot._'
+      '_Generated from `.llm-wiki/memory/` by Dixie Flatline._'
     ].filter(Boolean).join('\n'));
   }
 
@@ -48,19 +50,14 @@ function section(title: string, pages: MemoryPage[]): string {
 }
 
 function toBullets(page: MemoryPage): string[] {
-  const summary = page.body.match(/## Summary\s+([\s\S]*?)(?:\n## |\n# |$)/i)?.[1]
-    ?.split(/\r?\n/)
-    .map((line) => line.replace(/^[-*]\s*/, '').trim())
-    .filter(Boolean)
-    .slice(0, 3);
+  const lines = [`- ${page.summary} (${page.path})`];
 
-  const fallback = page.body
-    .split(/\r?\n/)
-    .map((line) => line.trim())
-    .filter((line) => line && !line.startsWith('#'))
-    .slice(0, 2);
+  if (page.entry.type === 'decision' && 'constraints' in page.entry) {
+    lines.push(...page.entry.constraints.slice(0, 4).map((constraint: string) => `- Constraint: ${constraint} (${page.path})`));
+    lines.push(...page.entry.antiPatterns.slice(0, 3).map((antiPattern: string) => `- Avoid: ${antiPattern} (${page.path})`));
+  }
 
-  return (summary?.length ? summary : fallback).map((line) => `- ${line} (${page.path})`);
+  return lines;
 }
 
 function compact(value: string): string {
@@ -71,4 +68,12 @@ function compact(value: string): string {
   }
 
   return `${words.slice(0, 1200).join(' ')}\n`;
+}
+
+function instructionPriority(page: MemoryPage): number {
+  const importance = { critical: 40, high: 20, low: 0 }[page.frontmatter.importance];
+  const confidence = { high: 20, medium: 10, low: 0 }[page.frontmatter.confidence];
+  const freshness = page.frontmatter.lastVerifiedAt ? 10 : 0;
+
+  return importance + confidence + freshness;
 }

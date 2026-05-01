@@ -1,16 +1,16 @@
 # Dixie Flatline
 
-Dixie Flatline is a VS Code extension that gives a repository a small, durable memory layer for GitHub Copilot and agent workflows.
+Dixie Flatline is a VS Code extension that gives a repository a structured, time-aware memory layer for GitHub Copilot and agent workflows.
 
-It stores architectural knowledge in version-controlled Markdown, retrieves relevant context for active files, and generates `.github/copilot-instructions.md` from the current memory set.
+It is not a simple LLM wiki. It stores typed decisions, facts, assumptions, known issues, and open questions in version-controlled Markdown, retrieves context by file relevance, importance, confidence, and freshness, and compiles high-impact memory into `.github/copilot-instructions.md`.
 
 ```mermaid
 flowchart TD
   Extension["VS Code Extension"]
   Chat["@project-memory Chat Participant"]
   Tools["Copilot / Agent Tools"]
-  Store[".llm-wiki Markdown Store"]
-  Index["Lightweight Index"]
+  Store[".llm-wiki Structured Markdown Store"]
+  Index["Freshness + Relevance Index"]
   Instructions[".github/copilot-instructions.md"]
 
   Extension --> Chat
@@ -24,10 +24,12 @@ flowchart TD
 ## MVP Scope
 
 - Initialise a repo-local `.llm-wiki/` memory structure.
-- Search Markdown memory by path, tags, and text similarity.
+- Store typed memory entries with importance, confidence, freshness, sources, and supersession metadata.
+- Search memory by path, tags, text similarity, importance, confidence, and freshness.
+- Track conflicts and unresolved questions without flattening ambiguity.
 - Answer `@project-memory` chat prompts with cited memory entries.
-- Expose Copilot language-model tools for memory search, decisions, diff updates, and instruction generation.
-- Generate `.github/copilot-instructions.md` from accepted decisions and conventions.
+- Expose Copilot language-model tools for relevant memory, critical decisions, conflicts, questions, diff updates, and instruction generation.
+- Generate `.github/copilot-instructions.md` from critical/high-importance memory.
 
 ## Workspace
 
@@ -66,6 +68,18 @@ pnpm package
 - `Dixie Flatline: Generate Instructions`
 - `Dixie Flatline: Update Memory from Diff`
 
+## Tool Interface
+
+```ts
+getRelevantMemory(filePath: string)
+getCriticalDecisions()
+recordDecision(input)
+updateMemoryFromDiff(diff)
+findConflicts(topic: string)
+getOpenQuestions()
+generateCopilotInstructions()
+```
+
 ## Chat Participant
 
 Use `@project-memory` in VS Code chat:
@@ -88,6 +102,7 @@ Use `@project-memory` in VS Code chat:
     domain-model.md
     testing.md
     known-issues.md
+    open-questions.md
   sources/
     pr-notes/
     issue-notes/

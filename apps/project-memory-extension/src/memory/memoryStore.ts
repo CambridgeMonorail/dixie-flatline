@@ -4,12 +4,13 @@ import { createFrontmatter, parseMemoryMarkdown } from './markdown';
 import { MemoryPage } from './types';
 
 const memoryFiles = [
-  ['architecture.md', 'architecture', 'Architecture'],
-  ['decisions.md', 'decision', 'Decisions'],
-  ['conventions.md', 'convention', 'Conventions'],
-  ['domain-model.md', 'domain', 'Domain Model'],
-  ['testing.md', 'testing', 'Testing'],
-  ['known-issues.md', 'issue', 'Known Issues']
+  ['architecture.md', 'fact', 'Architecture', 'Durable facts about the repository architecture.'],
+  ['decisions.md', 'decision', 'Decisions', 'Critical and high-impact decisions that should guide Copilot behavior.'],
+  ['conventions.md', 'decision', 'Conventions', 'Behavioral constraints and coding conventions for this repository.'],
+  ['domain-model.md', 'fact', 'Domain Model', 'Core domain concepts and claims.'],
+  ['testing.md', 'fact', 'Testing', 'Durable facts about the testing strategy.'],
+  ['known-issues.md', 'known_issue', 'Known Issues', 'Known issues that should remain visible to agents.'],
+  ['open-questions.md', 'question', 'Open Questions', 'Unresolved questions that should not be hidden.']
 ] as const;
 
 export class MemoryStore {
@@ -21,7 +22,7 @@ export class MemoryStore {
     await fs.mkdir(path.join(root, '.llm-wiki', 'index'), { recursive: true });
     await fs.mkdir(path.join(root, '.github', 'instructions'), { recursive: true });
 
-    for (const [fileName, type, title] of memoryFiles) {
+    for (const [fileName, type, title, summary] of memoryFiles) {
       const target = path.join(this.memoryDir(root), fileName);
 
       if (await exists(target)) {
@@ -33,11 +34,18 @@ export class MemoryStore {
         `${createFrontmatter({
           id: fileName.replace(/\.md$/, ''),
           type,
-          status: type === 'decision' ? 'living' : undefined,
+          title,
+          summary,
           confidence: 'medium',
-          last_reviewed: new Date().toISOString().slice(0, 10),
-          related_files: [],
-          tags: []
+          importance: type === 'decision' ? 'high' : 'low',
+          createdAt: new Date().toISOString().slice(0, 10),
+          lastUpdatedAt: new Date().toISOString().slice(0, 10),
+          lastVerifiedAt: undefined,
+          relatedFiles: [],
+          tags: [],
+          sources: [],
+          supersedes: [],
+          supersededBy: []
         })}\n# ${title}\n\n## Summary\nAdd durable project knowledge here.\n`,
         'utf8'
       );
@@ -65,30 +73,65 @@ export class MemoryStore {
     return pages.sort((a, b) => a.path.localeCompare(b.path));
   }
 
-  async appendDecision(root: string, input: { title: string; context: string; decision: string; consequences: string }): Promise<string> {
+  async appendDecision(root: string, input: {
+    title: string;
+    summary?: string;
+    context: string;
+    decision: string;
+    consequences: string;
+    constraints?: string[];
+    antiPatterns?: string[];
+    relatedFiles?: string[];
+    tags?: string[];
+    confidence?: 'high' | 'medium' | 'low';
+    importance?: 'critical' | 'high' | 'low';
+    sources?: string[];
+    supersedes?: string[];
+  }): Promise<string> {
     await this.initialise(root);
-    const target = path.join(this.memoryDir(root), 'decisions.md');
     const slug = input.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+    const target = path.join(this.memoryDir(root), `decision-${slug}.md`);
+    const today = new Date().toISOString().slice(0, 10);
     const entry = [
+      createFrontmatter({
+        id: slug,
+        type: 'decision',
+        title: input.title,
+        summary: input.summary || input.decision,
+        createdAt: today,
+        lastUpdatedAt: today,
+        lastVerifiedAt: today,
+        confidence: input.confidence ?? 'medium',
+        importance: input.importance ?? 'high',
+        relatedFiles: input.relatedFiles ?? [],
+        tags: input.tags ?? [],
+        sources: input.sources ?? [],
+        supersedes: input.supersedes ?? [],
+        supersededBy: []
+      }),
+      `# ${input.title}`,
       '',
-      `## ${input.title}`,
+      '## Summary',
+      input.summary || input.decision,
       '',
-      `- id: ${slug}`,
-      '- status: proposed',
-      `- last_reviewed: ${new Date().toISOString().slice(0, 10)}`,
-      '',
-      '### Context',
+      '## Context',
       input.context,
       '',
-      '### Decision',
+      '## Decision',
       input.decision,
       '',
-      '### Consequences',
+      '## Consequences',
       input.consequences,
+      '',
+      '## Constraints',
+      ...(input.constraints?.length ? input.constraints.map((constraint) => `- ${constraint}`) : ['- None recorded.']),
+      '',
+      '## Anti-Patterns',
+      ...(input.antiPatterns?.length ? input.antiPatterns.map((antiPattern) => `- ${antiPattern}`) : ['- None recorded.']),
       ''
     ].join('\n');
 
-    await fs.appendFile(target, entry, 'utf8');
+    await fs.writeFile(target, entry, 'utf8');
     return path.relative(root, target).replace(/\\/g, '/');
   }
 

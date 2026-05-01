@@ -15,7 +15,7 @@ export class MemoryIndexer {
     };
 
     for (const page of pages) {
-      for (const relatedFile of page.frontmatter.related_files) {
+      for (const relatedFile of page.frontmatter.relatedFiles) {
         index.files[relatedFile] ??= [];
         index.files[relatedFile].push(page.path);
       }

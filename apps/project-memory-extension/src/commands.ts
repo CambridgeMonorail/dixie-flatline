@@ -8,12 +8,12 @@ export function registerCommands(context: vscode.ExtensionContext, services: Pro
       const root = getWorkspaceRoot();
       await services.store.initialise(root);
       await services.indexer.rebuild(root);
-      vscode.window.showInformationMessage('Project Memory initialised.');
+      vscode.window.showInformationMessage('Dixie Flatline memory initialised.');
     }),
     vscode.commands.registerCommand('projectMemory.rebuildIndex', async () => {
       const root = getWorkspaceRoot();
       const index = await services.indexer.rebuild(root);
-      vscode.window.showInformationMessage(`Project Memory index rebuilt for ${Object.keys(index.files).length} memory entries.`);
+      vscode.window.showInformationMessage(`Dixie Flatline index rebuilt for ${Object.keys(index.files).length} file mappings.`);
     }),
     vscode.commands.registerCommand('projectMemory.generateInstructions', async () => {
       const root = getWorkspaceRoot();
@@ -23,8 +23,8 @@ export function registerCommands(context: vscode.ExtensionContext, services: Pro
     }),
     vscode.commands.registerCommand('projectMemory.updateMemoryFromDiff', async () => {
       const diff = await vscode.window.showInputBox({
-        title: 'Project Memory: Update Memory from Diff',
-        prompt: 'Paste a unified git diff. The MVP will suggest memory updates.',
+        title: 'Dixie Flatline: Update Memory from Diff',
+        prompt: 'Paste a unified git diff. Dixie Flatline will suggest typed memory updates.',
         ignoreFocusOut: true
       });
 

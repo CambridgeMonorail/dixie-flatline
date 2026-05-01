@@ -1,39 +1,50 @@
 ---
-id: project-memory-decisions
+id: structured-memory-not-wiki
 type: decision
-status: living
+title: Build a structured intelligence layer, not a wiki
+summary: Dixie Flatline stores typed, time-aware, decision-aware memory that actively influences Copilot behavior.
+createdAt: 2026-05-01
+lastUpdatedAt: 2026-05-01
+lastVerifiedAt: 2026-05-01
 confidence: high
-last_reviewed: 2026-05-01
-related_files:
-  - apps/project-memory-extension/src/**
+importance: critical
+relatedFiles:
+  - apps/project-memory-extension/src/memory/**
+  - apps/project-memory-extension/src/instructions/**
+  - apps/project-memory-extension/src/tools/**
 tags:
-  - memory
-  - decisions
+  - memory-model
+  - copilot
+  - intelligence-layer
+sources:
+  - Spec Update - From Wiki to Intelligence Layer
+supersedes:
+  - project-memory-extension-architecture
+supersededBy:
 ---
 
-# Decisions
+# Build a structured intelligence layer, not a wiki
 
-## Markdown is the source of truth
+## Summary
+Dixie Flatline stores typed, time-aware, decision-aware memory that actively influences Copilot behavior.
 
-### Context
-The MVP should avoid hosted services, vector databases, and heavyweight RAG infrastructure.
+## Context
+The original MVP treated memory as Markdown wiki pages with basic search. That approach does not scale well, can persist stale or conflicting knowledge, and does not reliably influence Copilot behavior.
 
-### Decision
-Store durable project knowledge as Markdown under `.llm-wiki/memory/` with simple frontmatter.
+## Decision
+Represent memory as structured entries with required type, confidence, importance, timestamps, source references, and supersession metadata. Retrieval and instruction generation must prioritize critical/high importance entries, high confidence, freshness, and file relevance.
 
-### Consequences
-- Memory is human-readable and version-controlled.
-- Search is deterministic in Phase 1.
-- Embeddings can be added later without changing the core storage contract.
+## Consequences
+Copilot receives behavior-guiding constraints rather than passive documentation. Outdated knowledge is deprioritized. Conflicts remain visible instead of being flattened away.
 
-## Keep VS Code APIs at the extension edge
+## Constraints
+- Every entry must have a type from `decision`, `fact`, `assumption`, `known_issue`, or `question`.
+- Default retrieval should exclude low-importance entries.
+- Entries with no `lastVerifiedAt` must be treated as stale or lower confidence.
+- Instruction compilation should include only critical/high importance entries.
+- Conflicts and superseded decisions must remain retrievable.
 
-### Context
-Core memory code needs unit tests that run outside the VS Code extension host.
-
-### Decision
-Keep `vscode` imports in command, chat, tool, and workspace boundary modules.
-
-### Consequences
-- Memory search and parsing remain testable with Vitest.
-- Extension-host integration can be verified separately.
+## Anti-Patterns
+- Do not treat `.llm-wiki` as unstructured notes.
+- Do not flatten competing decisions into a single undocumented answer.
+- Do not include low-importance memory in default Copilot instructions.

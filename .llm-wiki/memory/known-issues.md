@@ -1,18 +1,32 @@
 ---
-id: project-memory-known-issues
-type: issue
-status: living
+id: mvp-known-issues
+type: known_issue
+title: MVP known issues
+summary: The MVP has deterministic foundations but still lacks full diff synthesis and extension-host coverage.
+createdAt: 2026-05-01
+lastUpdatedAt: 2026-05-01
+lastVerifiedAt: 2026-05-01
 confidence: medium
-last_reviewed: 2026-05-01
-related_files:
+importance: high
+relatedFiles:
   - apps/project-memory-extension/src/**
 tags:
   - mvp
+  - known-issue
+sources:
+  - README.md
+supersedes:
+  - project-memory-known-issues
+supersededBy:
 ---
 
-# Known Issues
+# MVP known issues
 
 ## Summary
-- Diff processing is heuristic-only in the MVP and suggests updates rather than synthesizing final memory entries.
+The MVP has deterministic foundations but still lacks full diff synthesis and extension-host coverage.
+
+## Claims
+- Diff processing is heuristic-only and suggests memory updates rather than synthesizing final entries.
 - Extension-host integration tests are not yet wired.
-- The first package is local-only; Marketplace publishing metadata can be expanded later.
+- Conflict detection is metadata and keyword based, not semantic.
+- Marketplace publishing metadata can be expanded later.
