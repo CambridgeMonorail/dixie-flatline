@@ -73,11 +73,29 @@ code --install-extension path/to/dixie-flatline.vsix
 
 Or from VS Code with `Extensions: Install from VSIX...`.
 
-Then run:
+## First Run
+
+After installing the extension, open the repository you want to use with Dixie Flatline and run:
 
 ```txt
 Dixie Flatline: Initialise
 ```
+
+This creates the repo-local `.llm-wiki/` memory structure that Dixie Flatline uses for stored project memory and generated instructions.
+
+Once initialised, the main next steps are:
+
+- Ask `@project-memory` about the active file or project decisions.
+- Run `Dixie Flatline: Generate Instructions` to write `.github/copilot-instructions.md`.
+- Run `Dixie Flatline: Update Memory from Diff` to review suggested memory updates from current changes.
+
+## Privacy And Data Flow
+
+- Dixie Flatline stores project memory in local Markdown files under `.llm-wiki/` inside your repository.
+- Dixie Flatline generates `.github/copilot-instructions.md` in your repository from that local memory.
+- Dixie Flatline does not send your project memory to a Dixie Flatline hosted service because no hosted service is included.
+- Dixie Flatline does not require an external database or vector store.
+- Copilot chat and language-model tool usage still depends on your VS Code and GitHub Copilot setup.
 
 ## Build From Source
 
