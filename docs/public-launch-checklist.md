@@ -12,6 +12,7 @@ This repository is not public yet. Complete this checklist before changing visib
 - Package freshness: `pnpm outdated` returned no outdated direct dependencies
 - npm package name: `dixie-flatline` returned 404 from npm registry during lookup, so it does not appear to be published there
 - GitHub secret scanning/push protection: attempted via GitHub API, but GitHub returned `Secret scanning is not available for this repository`
+- Branch protection: attempted for `main`, but GitHub returned `Upgrade to GitHub Pro or make this repository public to enable this feature`
 - Generated artifacts: `dist/`, `.nx/`, `coverage/`, and `*.vsix` are ignored
 - Private memory: current `.llm-wiki/` entries are project memory for Dixie Flatline itself and are intended to be public
 
@@ -21,7 +22,7 @@ This repository is not public yet. Complete this checklist before changing visib
 - Confirm ignored local artifacts are not uploaded elsewhere as release assets by accident.
 - Enable GitHub secret scanning and push protection where available.
 - Enable private vulnerability reporting if available.
-- Add branch protection for `main` after CI has run at least once.
+- Add branch protection for `main` immediately after the repository is public, requiring the `Build and test` CI check and at least one approving review.
 - Confirm package and extension publishing names before publishing to npm or the VS Code Marketplace.
 - `npm audit` and `npm outdated` could not be run in the local Codex environment because `npm` is not installed with the bundled Node runtime; use pnpm results and/or run npm checks in another local Node installation if needed.
 
