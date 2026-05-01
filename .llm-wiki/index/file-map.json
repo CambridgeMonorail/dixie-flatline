@@ -22,6 +22,15 @@
     ],
     "apps/project-memory-extension/src/diff/**": [
       ".llm-wiki/memory/open-questions.md"
+    ],
+    "README.md": [
+      ".llm-wiki/memory/brand-positioning.md"
+    ],
+    "docs/brand/**": [
+      ".llm-wiki/memory/brand-positioning.md"
+    ],
+    "apps/project-memory-extension/package.json": [
+      ".llm-wiki/memory/brand-positioning.md"
     ]
   }
 }

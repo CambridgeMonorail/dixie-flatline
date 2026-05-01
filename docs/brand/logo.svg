@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
+  <title id="title">Dixie Flatline logo</title>
+  <desc id="desc">A terminal-style flatline waveform turning into code brackets.</desc>
+  <rect width="512" height="512" rx="72" fill="#04080f"/>
+  <path d="M64 256h86l18-48 36 96 34-142 38 188 28-94h54" fill="none" stroke="#3cff9a" stroke-width="24" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M356 180l-58 76 58 76" fill="none" stroke="#38d1ff" stroke-width="24" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M408 180l58 76-58 76" fill="none" stroke="#38d1ff" stroke-width="24" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M95 356h140" stroke="#be4caa" stroke-width="14" stroke-linecap="round" opacity=".9"/>
+  <path d="M95 392h90" stroke="#ffbe50" stroke-width="14" stroke-linecap="round" opacity=".75"/>
+  <rect x="38" y="38" width="436" height="436" rx="50" fill="none" stroke="#263947" stroke-width="8"/>
+</svg>

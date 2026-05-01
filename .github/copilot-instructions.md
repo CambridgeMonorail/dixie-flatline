@@ -3,6 +3,7 @@
 ## Project Overview
 
 - This is an Nx workspace for a VS Code extension named Dixie Flatline.
+- Tagline: Persistent project memory for AI coding agents.
 - The extension stores typed, time-aware, decision-aware memory in `.llm-wiki/memory/` Markdown files with schema frontmatter.
 - The extension app lives in `apps/project-memory-extension`.
 

@@ -1,10 +1,11 @@
 {
   "name": "dixie-flatline",
   "displayName": "Dixie Flatline",
-  "description": "Structured, time-aware repo-local memory for GitHub Copilot and VS Code agents.",
+  "description": "Persistent project memory for AI coding agents.",
   "version": "0.1.0",
   "publisher": "CambridgeMonorail",
   "license": "MIT",
+  "icon": "assets/icon.png",
   "repository": {
     "type": "git",
     "url": "https://github.com/CambridgeMonorail/dixie-flatline.git"

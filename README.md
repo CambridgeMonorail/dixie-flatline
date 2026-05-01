@@ -1,6 +1,10 @@
 # Dixie Flatline
 
-Dixie Flatline is a VS Code extension that gives a repository a structured, time-aware memory layer for GitHub Copilot and agent workflows.
+![Dixie Flatline README header](docs/brand/README-header.png)
+
+> Persistent project memory for AI coding agents.
+
+Dixie Flatline helps your AI coding assistant remember how your project actually works.
 
 It is not a simple LLM wiki. It stores typed decisions, facts, assumptions, known issues, and open questions in version-controlled Markdown, retrieves context by file relevance, importance, confidence, and freshness, and compiles high-impact memory into `.github/copilot-instructions.md`.
 
@@ -131,6 +135,10 @@ Use `@project-memory` in VS Code chat:
 ## Roadmap
 
 See [docs/roadmap.md](docs/roadmap.md).
+
+## Brand Assets
+
+Logo, icon, README header, and social preview assets live in [docs/brand](docs/brand).
 
 ## Public Launch Notes
 

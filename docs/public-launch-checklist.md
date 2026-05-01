@@ -13,6 +13,8 @@ This repository is not public yet. Complete this checklist before changing visib
 - npm package name: `dixie-flatline` returned 404 from npm registry during lookup, so it does not appear to be published there
 - GitHub secret scanning/push protection: attempted via GitHub API, but GitHub returned `Secret scanning is not available for this repository`
 - Branch protection: attempted for `main`, but GitHub returned `Upgrade to GitHub Pro or make this repository public to enable this feature`
+- Branding assets: logo, icon, README header, and social preview generated under `docs/brand/`
+- GitHub repo description and topics have been set. Upload `docs/brand/og-image.png` manually as the GitHub social preview before launch.
 - Generated artifacts: `dist/`, `.nx/`, `coverage/`, and `*.vsix` are ignored
 - Private memory: current `.llm-wiki/` entries are project memory for Dixie Flatline itself and are intended to be public
 

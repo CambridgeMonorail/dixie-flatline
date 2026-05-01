@@ -25,3 +25,5 @@ await copyFile(path.join(projectRoot, 'package.json'), path.join(outDir, 'packag
 await copyFile(path.join(projectRoot, 'README.md'), path.join(outDir, 'README.md'));
 await copyFile(path.join(projectRoot, '.vscodeignore'), path.join(outDir, '.vscodeignore'));
 await copyFile(path.join(root, 'LICENSE'), path.join(outDir, 'LICENSE'));
+await mkdir(path.join(outDir, 'assets'), { recursive: true });
+await copyFile(path.join(projectRoot, 'assets', 'icon.png'), path.join(outDir, 'assets', 'icon.png'));
