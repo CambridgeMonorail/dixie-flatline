@@ -30,3 +30,5 @@ The MVP has deterministic foundations but still lacks full diff synthesis and ex
 - Extension-host integration tests are not yet wired.
 - Conflict detection is metadata and keyword based, not semantic.
 - Marketplace publishing metadata can be expanded later.
+- The name "Dixie Flatline" has public non-software associations and should be treated as a deliberate branding decision before launch.
+- GitHub secret scanning was not available for the private repository at the time of the public-readiness pass.

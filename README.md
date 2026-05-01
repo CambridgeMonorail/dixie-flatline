@@ -4,6 +4,12 @@ Dixie Flatline is a VS Code extension that gives a repository a structured, time
 
 It is not a simple LLM wiki. It stores typed decisions, facts, assumptions, known issues, and open questions in version-controlled Markdown, retrieves context by file relevance, importance, confidence, and freshness, and compiles high-impact memory into `.github/copilot-instructions.md`.
 
+## Status
+
+Experimental VS Code extension for repo-local AI memory.
+
+Not production-ready. APIs and schema may change.
+
 ```mermaid
 flowchart TD
   Extension["VS Code Extension"]
@@ -50,9 +56,9 @@ apps/
 
 ```bash
 pnpm install
-pnpm build
-pnpm typecheck
+pnpm lint
 pnpm test
+pnpm build
 ```
 
 To package a VSIX:
@@ -67,6 +73,13 @@ pnpm package
 - `Dixie Flatline: Rebuild Index`
 - `Dixie Flatline: Generate Instructions`
 - `Dixie Flatline: Update Memory from Diff`
+
+## Limitations
+
+- Diff-to-memory updates are heuristic and suggest actions rather than auto-applying them.
+- Conflict detection is metadata and keyword based.
+- Extension-host tests are not wired yet.
+- No external vector database or hosted service is included.
 
 ## Tool Interface
 
@@ -114,3 +127,11 @@ Use `@project-memory` in VS Code chat:
   copilot-instructions.md
   instructions/
 ```
+
+## Roadmap
+
+See [docs/roadmap.md](docs/roadmap.md).
+
+## Public Launch Notes
+
+See [docs/public-launch-checklist.md](docs/public-launch-checklist.md) before changing repository visibility.

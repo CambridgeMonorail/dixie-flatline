@@ -17,6 +17,12 @@
         "command": "tsc -p apps/project-memory-extension/tsconfig.json --noEmit"
       }
     },
+    "lint": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "tsc -p apps/project-memory-extension/tsconfig.json --noEmit"
+      }
+    },
     "test": {
       "executor": "nx:run-commands",
       "options": {

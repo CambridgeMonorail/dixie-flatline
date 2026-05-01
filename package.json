@@ -9,19 +9,27 @@
     "url": "https://github.com/CambridgeMonorail/dixie-flatline.git"
   },
   "packageManager": "pnpm@10.33.2",
+  "pnpm": {
+    "overrides": {
+      "brace-expansion": "5.0.5",
+      "follow-redirects": "1.16.0",
+      "yaml": "2.8.3"
+    }
+  },
   "scripts": {
     "build": "nx build project-memory-extension",
+    "lint": "nx lint project-memory-extension",
     "typecheck": "nx typecheck project-memory-extension",
     "test": "nx test project-memory-extension",
     "package": "nx package project-memory-extension"
   },
   "devDependencies": {
-    "@types/node": "latest",
-    "@types/vscode": "latest",
-    "@vscode/vsce": "latest",
-    "esbuild": "latest",
-    "nx": "latest",
-    "typescript": "latest",
-    "vitest": "latest"
+    "@types/node": "25.6.0",
+    "@types/vscode": "1.118.0",
+    "@vscode/vsce": "3.9.1",
+    "esbuild": "0.28.0",
+    "nx": "22.7.1",
+    "typescript": "6.0.3",
+    "vitest": "4.1.5"
   }
 }
