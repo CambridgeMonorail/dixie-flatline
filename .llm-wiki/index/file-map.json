@@ -1,0 +1,17 @@
+{
+  "generatedAt": "2026-05-01T00:00:00.000Z",
+  "files": {
+    "apps/project-memory-extension/src/**": [
+      ".llm-wiki/memory/architecture.md",
+      ".llm-wiki/memory/decisions.md",
+      ".llm-wiki/memory/conventions.md",
+      ".llm-wiki/memory/known-issues.md"
+    ],
+    "apps/project-memory-extension/src/memory/**": [
+      ".llm-wiki/memory/domain-model.md"
+    ],
+    "apps/project-memory-extension/src/**/*.spec.ts": [
+      ".llm-wiki/memory/testing.md"
+    ]
+  }
+}

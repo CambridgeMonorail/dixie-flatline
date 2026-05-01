@@ -1,0 +1,9 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "outDir": "../../dist/out-tsc/apps/project-memory-extension",
+    "rootDir": ".",
+    "types": ["node", "vscode", "vitest"]
+  },
+  "include": ["src/**/*.ts", "vitest.config.ts"]
+}

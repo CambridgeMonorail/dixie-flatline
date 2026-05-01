@@ -1,0 +1,27 @@
+{
+  "name": "dixie-flatline",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Nx workspace for Dixie Flatline, a VS Code Copilot extension that maintains repo-local project memory.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/CambridgeMonorail/dixie-flatline.git"
+  },
+  "packageManager": "pnpm@10.33.2",
+  "scripts": {
+    "build": "nx build project-memory-extension",
+    "typecheck": "nx typecheck project-memory-extension",
+    "test": "nx test project-memory-extension",
+    "package": "nx package project-memory-extension"
+  },
+  "devDependencies": {
+    "@types/node": "latest",
+    "@types/vscode": "latest",
+    "@vscode/vsce": "latest",
+    "esbuild": "latest",
+    "nx": "latest",
+    "typescript": "latest",
+    "vitest": "latest"
+  }
+}

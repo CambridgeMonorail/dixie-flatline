@@ -1,0 +1,202 @@
+{
+  "name": "dixie-flatline",
+  "displayName": "Dixie Flatline",
+  "description": "Repo-local Markdown memory for GitHub Copilot and VS Code agents.",
+  "version": "0.1.0",
+  "publisher": "CambridgeMonorail",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/CambridgeMonorail/dixie-flatline.git"
+  },
+  "engines": {
+    "vscode": "^1.100.0"
+  },
+  "categories": ["AI", "Other"],
+  "activationEvents": [
+    "onStartupFinished",
+    "onChatParticipant:project-memory.participant",
+    "onCommand:projectMemory.initialise",
+    "onCommand:projectMemory.rebuildIndex",
+    "onCommand:projectMemory.generateInstructions",
+    "onCommand:projectMemory.updateMemoryFromDiff"
+  ],
+  "main": "./extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "projectMemory.initialise",
+        "title": "Dixie Flatline: Initialise"
+      },
+      {
+        "command": "projectMemory.rebuildIndex",
+        "title": "Dixie Flatline: Rebuild Index"
+      },
+      {
+        "command": "projectMemory.generateInstructions",
+        "title": "Dixie Flatline: Generate Instructions"
+      },
+      {
+        "command": "projectMemory.updateMemoryFromDiff",
+        "title": "Dixie Flatline: Update Memory from Diff"
+      }
+    ],
+    "chatParticipants": [
+      {
+        "id": "project-memory.participant",
+        "name": "project-memory",
+        "fullName": "Dixie Flatline",
+        "description": "Answers questions using repo-local project memory.",
+        "isSticky": true,
+        "commands": [
+          {
+            "name": "explain",
+            "description": "Explain the active file using project memory."
+          },
+          {
+            "name": "decisions",
+            "description": "Find decisions that affect the active file or prompt."
+          },
+          {
+            "name": "update",
+            "description": "Suggest memory updates from current changes."
+          }
+        ],
+        "disambiguation": [
+          {
+            "category": "project_memory",
+            "description": "Questions about repository decisions, architecture, conventions, domain model, testing practices, or known issues stored in .llm-wiki memory.",
+            "examples": [
+              "What decisions affect this module?",
+              "Explain this file using project memory",
+              "Summarise the auth flow from memory",
+              "Update memory from current changes"
+            ]
+          }
+        ]
+      }
+    ],
+    "languageModelTools": [
+      {
+        "name": "project-memory_searchProjectMemory",
+        "toolReferenceName": "projectMemorySearch",
+        "displayName": "Search Dixie Flatline Memory",
+        "canBeReferencedInPrompt": true,
+        "icon": "$(search)",
+        "modelDescription": "Searches the repository-local .llm-wiki Markdown memory for project-specific architecture, decisions, conventions, testing notes, domain knowledge, and known issues. Use when Copilot needs durable context about this codebase.",
+        "userDescription": "Search repo-local project memory.",
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "query": {
+              "type": "string",
+              "description": "Natural language search query."
+            }
+          },
+          "required": ["query"]
+        }
+      },
+      {
+        "name": "project-memory_getRelevantContext",
+        "toolReferenceName": "projectMemoryContext",
+        "displayName": "Get Relevant Dixie Flatline Context",
+        "canBeReferencedInPrompt": true,
+        "icon": "$(references)",
+        "modelDescription": "Returns memory entries relevant to an absolute or workspace-relative file path using frontmatter related_files, tags, filename matching, and text scoring.",
+        "userDescription": "Get memory context for a file.",
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "filePath": {
+              "type": "string",
+              "description": "Absolute or workspace-relative file path."
+            }
+          },
+          "required": ["filePath"]
+        }
+      },
+      {
+        "name": "project-memory_getRelevantDecisions",
+        "toolReferenceName": "projectMemoryDecisions",
+        "displayName": "Get Relevant Project Decisions",
+        "canBeReferencedInPrompt": true,
+        "icon": "$(law)",
+        "modelDescription": "Returns accepted or proposed decisions from project memory that are relevant to a file path.",
+        "userDescription": "Get relevant memory decisions for a file.",
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "filePath": {
+              "type": "string",
+              "description": "Absolute or workspace-relative file path."
+            }
+          },
+          "required": ["filePath"]
+        }
+      },
+      {
+        "name": "project-memory_recordDecision",
+        "toolReferenceName": "projectMemoryRecordDecision",
+        "displayName": "Record Project Decision",
+        "canBeReferencedInPrompt": true,
+        "icon": "$(edit)",
+        "modelDescription": "Records a human-readable architectural or behavioral decision into .llm-wiki/memory/decisions.md. Use only when the user asks to persist a decision.",
+        "userDescription": "Record a decision in project memory.",
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "title": { "type": "string" },
+            "context": { "type": "string" },
+            "decision": { "type": "string" },
+            "consequences": { "type": "string" }
+          },
+          "required": ["title", "context", "decision", "consequences"]
+        }
+      },
+      {
+        "name": "project-memory_updateMemoryFromDiff",
+        "toolReferenceName": "projectMemoryUpdateFromDiff",
+        "displayName": "Update Memory From Diff",
+        "canBeReferencedInPrompt": true,
+        "icon": "$(diff)",
+        "modelDescription": "Analyzes a git diff and returns suggested memory updates. The MVP uses deterministic heuristics and does not automatically write unless a calling command chooses to persist a decision.",
+        "userDescription": "Suggest project memory updates from a diff.",
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "diff": {
+              "type": "string",
+              "description": "Unified git diff text."
+            }
+          },
+          "required": ["diff"]
+        }
+      },
+      {
+        "name": "project-memory_generateCopilotInstructions",
+        "toolReferenceName": "projectMemoryGenerateInstructions",
+        "displayName": "Generate Copilot Instructions",
+        "canBeReferencedInPrompt": true,
+        "icon": "$(file-code)",
+        "modelDescription": "Builds .github/copilot-instructions.md content from project memory, emphasizing accepted decisions, constraints, conventions, architecture, testing notes, and known issues.",
+        "userDescription": "Generate Copilot instructions from memory.",
+        "inputSchema": {
+          "type": "object",
+          "properties": {}
+        }
+      }
+    ],
+    "configuration": {
+      "title": "Dixie Flatline",
+      "properties": {
+        "projectMemory.maxSearchResults": {
+          "type": "number",
+          "default": 5,
+          "minimum": 1,
+          "maximum": 20,
+          "description": "Maximum number of memory entries returned in chat and tools."
+        }
+      }
+    }
+  }
+}
