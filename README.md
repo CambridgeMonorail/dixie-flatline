@@ -14,6 +14,8 @@ Experimental VS Code extension for repo-local AI memory.
 
 Not production-ready. APIs and schema may change.
 
+If you want to try it without building from source, install a VSIX from GitHub Releases.
+
 ```mermaid
 flowchart TD
   Extension["VS Code Extension"]
@@ -56,7 +58,28 @@ apps/
       tools/
 ```
 
-## Getting Started
+## Try A Release Build
+
+Download a `.vsix` asset from [GitHub Releases](https://github.com/CambridgeMonorail/dixie-flatline/releases).
+
+- For the current public build, use [v0.1.0](https://github.com/CambridgeMonorail/dixie-flatline/releases/tag/v0.1.0).
+- For dev builds, look for releases marked `Pre-release` and download the attached `.vsix` asset.
+
+Install the downloaded VSIX with either:
+
+```bash
+code --install-extension path/to/dixie-flatline.vsix
+```
+
+Or from VS Code with `Extensions: Install from VSIX...`.
+
+Then run:
+
+```txt
+Dixie Flatline: Initialise
+```
+
+## Build From Source
 
 ```bash
 pnpm install

@@ -1,6 +1,6 @@
 # Public Launch Checklist
 
-This repository is not public yet. Complete this checklist before changing visibility.
+This repository is already public. Keep this checklist as a record of the public-readiness pass and as an ongoing checklist for release maintenance on this repository and future public repos.
 
 ## Current Status
 
@@ -19,7 +19,7 @@ This repository is not public yet. Complete this checklist before changing visib
 - Generated artifacts: `dist/`, `.nx/`, `coverage/`, and `*.vsix` are ignored
 - Private memory: current `.llm-wiki/` entries are project memory for Dixie Flatline itself and are intended to be public
 
-## Before Visibility Change
+## Ongoing Protections And Launch Checks
 
 - Confirm `.llm-wiki/` contains no private prompts, private repo memory, customer names, internal roadmap details, Slack excerpts, screenshots, or proprietary snippets.
 - Confirm ignored local artifacts are not uploaded elsewhere as release assets by accident.
