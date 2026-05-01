@@ -11,10 +11,11 @@ This repository is not public yet. Complete this checklist before changing visib
 - Dependency audit: `pnpm audit --audit-level moderate` reports no known vulnerabilities after dependency overrides
 - Package freshness: `pnpm outdated` returned no outdated direct dependencies
 - npm package name: `dixie-flatline` returned 404 from npm registry during lookup, so it does not appear to be published there
-- GitHub secret scanning/push protection: attempted via GitHub API, but GitHub returned `Secret scanning is not available for this repository`
-- Branch protection: attempted for `main`, but GitHub returned `Upgrade to GitHub Pro or make this repository public to enable this feature`
+- GitHub secret scanning/push protection: enabled after the repository became public
+- Branch protection: enabled after the repository became public; `main` requires `Build and test` and one approving review
 - Branding assets: logo, icon, README header, and social preview generated under `docs/brand/`
 - GitHub repo description and topics have been set. Upload `docs/brand/og-image.png` manually as the GitHub social preview before launch.
+- First release: `v0.1.0` created with `dixie-flatline-0.1.0.vsix`
 - Generated artifacts: `dist/`, `.nx/`, `coverage/`, and `*.vsix` are ignored
 - Private memory: current `.llm-wiki/` entries are project memory for Dixie Flatline itself and are intended to be public
 
@@ -22,9 +23,9 @@ This repository is not public yet. Complete this checklist before changing visib
 
 - Confirm `.llm-wiki/` contains no private prompts, private repo memory, customer names, internal roadmap details, Slack excerpts, screenshots, or proprietary snippets.
 - Confirm ignored local artifacts are not uploaded elsewhere as release assets by accident.
-- Enable GitHub secret scanning and push protection where available.
+- Keep GitHub secret scanning and push protection enabled.
 - Enable private vulnerability reporting if available.
-- Add branch protection for `main` immediately after the repository is public, requiring the `Build and test` CI check and at least one approving review.
+- Keep branch protection for `main` enabled, requiring the `Build and test` CI check and at least one approving review.
 - Confirm package and extension publishing names before publishing to npm or the VS Code Marketplace.
 - `npm audit` and `npm outdated` could not be run in the local Codex environment because `npm` is not installed with the bundled Node runtime; use pnpm results and/or run npm checks in another local Node installation if needed.
 
